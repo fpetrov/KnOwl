@@ -1,7 +1,7 @@
 # KnOwl
 Реализация проекта МЭШ акселератора.
 Проект можно открыть по <a href="https://knowl-ed.herokuapp.com/">ссылке</a>.
-Презентация также доступна по <a href="https://drive.google.com/file/d/1CASe4nB3WpOTKSIt-V7bxiPvC8rH3s2l/view?usp=sharing">ссылке</a>.
+Презентация также доступна по <a href="https://disk.yandex.ru/d/BNqkifG_oNvpYA">ссылке</a>.
 
 ## Запуск проекта
 
