@@ -6,7 +6,7 @@
     import Password from "../components/Password.svelte";
     import { notyf } from "../notyf";
     import { httpClient } from "../httpClient";
-    import { saveUser, delayedRedirect, createFingerprint, generateString } from '../helperFunctions';
+    import { saveUser, delayedRedirect } from '../helperFunctions';
     import Button from "../components/Button.svelte";
     import EmptyCard from "../components/EmptyCard.svelte";
     import InlineLink from "../components/InlineLink.svelte";
@@ -15,37 +15,36 @@
 
     function authenticate()
     {
-        userData.fingerprint = generateString(15);
+        userData.fingerprint = navigator.userAgent;
 
         // Create new account.
         httpClient.url("/api/Authentication/")
             .post(userData)
             .res(response => {
-                notyf.success("Your account has been successfully created!");
-                createFingerprint(userData.fingerprint);
+                notyf.success("Ваш аккаунт успешно создан!");
 
                 // Fetch jwt and refresh token.
                 httpClient.url("/api/Authentication/authenticate")
                     .post(userData)
                     .json(json => {
-                        notyf.success("Welcome to KnOwl!");
+                        notyf.success("Добро пожаловать в KnOwl!");
                         saveUser(json.jwt, json.refreshToken);
                         delayedRedirect("/profile", 2000);
                     });
             })
             .catch(error => {
-                notyf.error("User with this name already exists!")
+                notyf.error("Пользователь с таким именем уже существует!")
             });
     }
 </script>
 
 <Page>
-	<MainTitle>Sign up</MainTitle>
-	<Title>Please <b>fill up</b> these fields to continue:</Title>
+	<MainTitle>Создать аккаунт</MainTitle>
+	<Title>Пожалуйста, <b>заполните</b> эти поля, чтобы продолжить:</Title>
     <EmptyCard styles="min-width: 270px; max-width: 450px;">
         <InputField inputText="Name" bind:value={userData.name} />
         <Password inputText="Password" bind:value={userData.password} />    
-        <Button onClick={() => authenticate()}>Continue</Button>
-        <InlineLink styles="margin-top: 10px;" href="/signin">Already have an account?</InlineLink>
+        <Button onClick={() => authenticate()}>Продолжить</Button>
+        <InlineLink styles="margin-top: 10px;" href="/signin">Уже есть аккаунт?</InlineLink>
     </EmptyCard>
 </Page>

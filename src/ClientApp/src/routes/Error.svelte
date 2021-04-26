@@ -6,6 +6,6 @@
 </script>
 
 <Page>
-	<MainTitle><b>Oooops!</b> Page not found!</MainTitle>
-	<Title>Try another link or just <InlineLink href="/">return</InlineLink> to the main page.</Title>
+	<MainTitle><b>Ой!</b> Страница не найдена!</MainTitle>
+	<Title>Попробуйте ввести другую ссылку или просто <InlineLink href="/">вернитесь</InlineLink> на главную страницу.</Title>
 </Page>

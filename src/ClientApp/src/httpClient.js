@@ -16,5 +16,5 @@ export const httpClient = wretch()
             const jwt = refreshTokenPair();
           }
 
-        return request.auth(`Bearer ${ userData.Jwt }`).replay().unauthorized(err => { console.log("Ooops... something went wrong") }).json();
+        return request.auth(`Bearer ${userData.Jwt}`).replay().unauthorized(err => { console.log("Ooops... something went wrong") }).json();
     });

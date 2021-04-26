@@ -48,7 +48,7 @@ namespace KnOwl.Repositories.User
             var entity = await _context.Set<Entities.Authentication.User>().FindAsync(id);
 
             if (entity == null)
-                return entity;
+                return null;
 
             _context.Set<Entities.Authentication.User>().Remove(entity);
             await _context.SaveChangesAsync();

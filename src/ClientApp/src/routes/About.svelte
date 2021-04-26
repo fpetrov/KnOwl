@@ -6,8 +6,8 @@
 </script>
 
 <Page>
-	<MainTitle>About</MainTitle>
+	<MainTitle>О нас</MainTitle>
 	<EmptyCard styles="max-width: 450px;">
-		<Title>We are a small team consisting of <b>4</b> people. This project is made for the pre-professional <b>olympiad</b>.</Title>
+		<Title>Мы - команда, состоящая из <b>5</b> человек. Этот проект создан для акселератора проектов <b>МЭШ</b>.</Title>
 	</EmptyCard>
 </Page>

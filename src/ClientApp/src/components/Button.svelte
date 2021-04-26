@@ -1,9 +1,10 @@
 <script>
     export let onClick;
     export let href;
+    export let styles;
 </script>
 
-<a href={href} on:click={onClick}>
+<a href={href} style={styles} on:click={onClick}>
     <slot></slot>
 </a>
 

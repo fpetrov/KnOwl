@@ -19,7 +19,7 @@ nav {
   position: fixed;
   top: 0;
   background-color: var(--color-navbar);
-  backdrop-filter: blur(25px);
+  backdrop-filter: saturate(180%) blur(20px);
   z-index: 1;
 }
 
@@ -27,6 +27,7 @@ nav a {
   font-weight: 500;
   text-transform: uppercase;
   text-decoration: none;
+  font-weight: 600;
   margin: 0 15px;
   font-size: 17px;
   letter-spacing: 1px;

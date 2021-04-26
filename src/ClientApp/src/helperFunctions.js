@@ -29,21 +29,6 @@ export function isEmpty(content) {
     return (!content || 0 === content.length);
 }
 
-export function createFingerprint(value)
-{
-    Cookies.set('fingerprint', value, { expires: 15 });
-}
-
-export function getFingerprint()
-{
-    Cookies.get('fingerprint');
-}
-
-export function clearFingerprint()
-{
-    Cookies.remove('fingerprint');
-}
-
 export function saveImage(photos)
 {
     // Create new image.
@@ -60,24 +45,24 @@ export function saveUser(jwt, refreshToken)
     Cookies.set('refreshToken', refreshToken, { expires: 15 });
 
     var decodedJwt = decodeJwt(jwt);
-    
+
     user.set({ Jwt: jwt, Name: decodedJwt.name, Role: decodedJwt.role, IsAuth: true });
 }
 
 export function refreshTokenPair()
 {
     var refreshToken = Cookies.get('refreshToken');
-    var fingerprint = Cookies.get('fingerprint');
 
 	if (!isEmpty(refreshToken))
 	{
 		// Refresh token pair.
 		httpClient.url("/api/Authentication/refreshToken")
-            .post({ token: refreshToken, fingerprint: fingerprint })
+            .post({ token: refreshToken, fingerprint: navigator.userAgent })
             .json(json => {
                 saveUser(json.jwt, json.refreshToken);
             })
 			.catch(error => {
+                signOut();
 				console.log(error);
 			});
 	}
@@ -86,7 +71,7 @@ export function refreshTokenPair()
 export function signOut()
 {
     var refreshToken = Cookies.get('refreshToken');
-    revokeRefreshToken(refreshToken);
+    //revokeRefreshToken(refreshToken);
 
     Cookies.remove('refreshToken');
 
@@ -106,5 +91,5 @@ export function delayedRedirect(href, delay)
 export function revokeRefreshToken(refreshToken)
 {
     httpClient.url("/api/Authentication/revokeToken")
-        .post({ token: refreshToken, fingerprint: getFingerprint() });
+        .post({ token: refreshToken, fingerprint: navigator.userAgent });
 }

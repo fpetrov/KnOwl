@@ -17,6 +17,7 @@ namespace KnOwl.Services
 
         public async Task<Entities.Authentication.User> Add(Entities.Authentication.User entity)
         {
+            entity.Role = Entities.Authentication.Role.Admin;
             return await _userRepository.Add(entity);
         }
 

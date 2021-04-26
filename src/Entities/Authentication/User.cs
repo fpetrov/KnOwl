@@ -14,7 +14,7 @@ namespace KnOwl.Entities.Authentication
         public string Password { get; set; }
 
         [JsonIgnore]
-        public List<Article> Articles { get; set; }
+        public List<Article> Articles { get; set; } = new List<Article>();
 
         [JsonIgnore]
         public List<RefreshToken> RefreshTokens { get; set; }

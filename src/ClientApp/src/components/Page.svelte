@@ -1,4 +1,8 @@
-<div>
+<script>
+    export let styles = '';
+</script>
+
+<div style={styles}>
     <slot></slot>
 </div>
 

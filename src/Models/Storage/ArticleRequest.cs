@@ -6,6 +6,5 @@ namespace KnOwl.Models.Storage
     public class ArticleRequest
     {
         public Article Article { get; set; }
-        public User Author { get; set; }
     }
 }

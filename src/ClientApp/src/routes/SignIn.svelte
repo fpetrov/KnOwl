@@ -7,7 +7,7 @@
     import { notyf } from "../notyf";
     import { httpClient } from "../httpClient";
     import { user } from '../storage';
-    import { saveUser, delayedRedirect, createFingerprint, generateString } from '../helperFunctions';
+    import { saveUser, delayedRedirect } from '../helperFunctions';
     import Button from "../components/Button.svelte";
     import EmptyCard from "../components/EmptyCard.svelte";
     import InlineLink from "../components/InlineLink.svelte";
@@ -16,29 +16,28 @@
 
     function authenticate()
     {
-        userData.fingerprint = generateString(15);
+        userData.fingerprint = navigator.userAgent;
 
         httpClient.url("/api/Authentication/authenticate")
             .post(userData)
             .json(json => {
-                createFingerprint(userData.fingerprint);
                 saveUser(json.jwt, json.refreshToken);
-                notyf.success("Welcome back, " + $user.Name);
+                notyf.success("Добро пожаловать, " + $user.Name);
                 delayedRedirect("/profile", 2000);
             })
             .catch(error => {
-                notyf.error("User fields are incorrect!");
+                notyf.error("Введенные данные неверны!");
             });
     }
 </script>
 
 <Page>
-	<MainTitle>Sign in</MainTitle>
-	<Title>Please <b>fill up</b> these fields to continue:</Title>
+	<MainTitle>Войти</MainTitle>
+	<Title>Пожалуйста, <b>заполните</b> эти поля, чтобы продолжить:</Title>
     <EmptyCard styles="min-width: 270px; max-width: 450px;">
         <InputField inputText="Name" bind:value={userData.name} />
         <Password inputText="Password" bind:value={userData.password} />    
-        <Button onClick={() => authenticate()}>Continue</Button>
-        <InlineLink styles="margin-top: 10px;" href="/signup">Don't have an account? </InlineLink>
+        <Button onClick={() => authenticate()}>Продолжить</Button>
+        <InlineLink styles="margin-top: 10px;" href="/signup">Нет аккаунта?</InlineLink>
     </EmptyCard>
 </Page>

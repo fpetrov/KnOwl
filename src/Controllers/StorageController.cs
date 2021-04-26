@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace KnOwl.Controllers
@@ -29,21 +28,11 @@ namespace KnOwl.Controllers
         }
 
         // Articles.
-        [HttpPost("test")]
-        public IActionResult Test()
-        {
-            var response = HttpContext.User.Claims.Where(c => c.Type == "name").FirstOrDefault();
-
-            if (response == null)
-                return BadRequest(new { message = "Can't add this article!" });
-
-            return Ok(new { message = response.Value });
-        }
-
-        [HttpPost("article")]
+        [HttpPost("articles")]
+        [AllowAnonymous]
         public async Task<IActionResult> CreateArticle([FromBody] ArticleRequest request)
         {
-            request.Author = await _userService.Get(HttpContext.GetUserName());
+            request.Article.Author = await _userService.Get(HttpContext.GetUserName());
 
             var response = await _articleService.Add(request);
 
@@ -53,8 +42,56 @@ namespace KnOwl.Controllers
             return Ok(new { message = "Article was saved successfuly!" });
         }
 
+        [HttpGet("articles")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetArticles()
+        {
+            var response = await _articleService.GetAll();
+
+            if (response == null)
+                return NotFound();
+
+            return Ok(response);
+        }
+
+        [HttpGet("articles/take/{count}")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetArticlesByCount(int? count)
+        {
+            var response = await _articleService.Take(count);
+
+            if (response == null)
+                return NotFound();
+
+            return Ok(response);
+        }
+
+        [HttpGet("articles/{id}")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetArticleById(int id)
+        {
+            var response = await _articleService.Get(id);
+
+            if (response == null)
+                return NotFound();
+
+            return Ok(response);
+        }
+
+        [HttpGet("articles/private")]
+        public async Task<IActionResult> GetPrivateArticles()
+        {
+            var author = await _userService.Get(HttpContext.GetUserName());
+            var response = author.Articles;
+
+            if (response == null)
+                return NotFound();
+
+            return Ok(response);
+        }
+
         // Images.
-        [HttpPost("image")]
+        [HttpPost("images")]
         [AllowAnonymous]
         public async Task<IActionResult> CreateImage(List<IFormFile> files)
         {
@@ -66,7 +103,7 @@ namespace KnOwl.Controllers
             return Ok(new { message = "New image was saved successfuly!" });
         }
 
-        [HttpDelete("image/{id}")]
+        [HttpDelete("images/{id}")]
         public async Task<IActionResult> DeleteImage(int id)
         {
             await _imageService.Remove(id);

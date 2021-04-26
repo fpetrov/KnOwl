@@ -4,7 +4,6 @@ namespace KnOwl.Models.Authentication
 {
     public class RefreshTokenRequest
     {
-        [Required]
         public string Token { get; set; }
 
         [Required]

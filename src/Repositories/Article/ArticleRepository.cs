@@ -11,24 +11,21 @@ namespace KnOwl.Repositories.Article
     public class ArticleRepository : IArticleRepository
     {
         private readonly ApplicationContext _context;
-        private readonly IUserService _userService;
 
-        public ArticleRepository(ApplicationContext context, IUserService userService)
+        public ArticleRepository(ApplicationContext context)
         {
             _context = context;
-            _userService = userService;
         }
 
         public async Task<Entities.Storage.Article> Add(ArticleRequest request)
         {
-            var author = request.Author;
+            var author = request.Article.Author;
 
-            if (author.Articles.Any(a => a.Title == request.Article.Title))
+            if (await _context.Set<Entities.Storage.Article>().AnyAsync(a => a.Title == request.Article.Title))
                 return null;
 
-            author.Articles.Add(request.Article);
-
-            await _userService.Update(author);
+            _context.Set<Entities.Storage.Article>().Add(request.Article);
+            await _context.SaveChangesAsync();
 
             return request.Article;
         }
@@ -36,6 +33,14 @@ namespace KnOwl.Repositories.Article
         public async Task<Entities.Storage.Article> Get(int id)
         {
             return await _context.Set<Entities.Storage.Article>().FindAsync(id);
+        }
+
+        public async Task<List<Entities.Storage.Article>> Take(int? count)
+        {
+            if (!count.HasValue)
+                return null;
+
+            return (await _context.Set<Entities.Storage.Article>().Where(a => a.Type == Entities.Storage.ArticleType.Shared).ToListAsync()).TakeLast(count.Value).ToList();
         }
 
         public async Task<List<Entities.Storage.Article>> GetAll()
@@ -48,7 +53,7 @@ namespace KnOwl.Repositories.Article
             var entity = await _context.Set<Entities.Storage.Article>().FindAsync(id);
 
             if (entity == null)
-                return entity;
+                return null;
 
             _context.Set<Entities.Storage.Article>().Remove(entity);
             await _context.SaveChangesAsync();
