@@ -1,8 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 
 namespace KnOwl.Entities.Storage
 {
-    public class Image
+    [Owned]
+    public class Tag
     {
         [Key]
         public int Id { get; set; }

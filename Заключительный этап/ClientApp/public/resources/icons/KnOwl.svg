@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" aria-labelledby="title"
+aria-describedby="desc" role="img" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <title>Cardboard Box</title>
+  <desc>A flat styled icon from Orion Icon Library.</desc>
+  <path data-name="layer3"
+  fill="#c69267" d="M2 62V20L14 4h36.002L62 20v42H2z"></path>
+  <path data-name="opacity" fill="#fff" opacity=".15" d="M14 4L2 20h60L50.002 4H14z"></path>
+  <path data-name="layer2" fill="#e6edf7" d="M10.002 46H30v8H10.002z"></path>
+  <path data-name="layer1" fill="#ffdda4" d="M25 20h14L36 4h-8l-3 16z"></path>
+</svg>
