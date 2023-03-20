@@ -1,16 +1,16 @@
-# KnOwl
-Реализация проекта МЭШ акселератора.
-Проект можно открыть по <a href="https://knowl-ed.herokuapp.com/">ссылке</a>.
-Презентация также доступна по <a href="https://disk.yandex.ru/d/BNqkifG_oNvpYA">ссылке</a>.
+# Showcast
+Рекомендационная система для фильмов, где можно смотреть фильмы онлайн.
+Презентация также доступна по <a href="https://drive.google.com/drive/folders/1fj9uw3ta5khfwaU-SpFqlO33rMpGLBmP?usp=sharing">ссылке</a>.
 ## Запуск проекта
 
 ### Бэкенд
 ```
+cd Showcast.Application
 dotnet run -c Release
 ```
 ### Фронтэнд
 ```
+cd Showcast.Frontend
 npm i
 npm run dev
 ```
-**Примечание**: Если Вы запускаете бэкенд, то запускать фронтэнд не нужно. Это сделает само веб-приложение. В целях безопасности строки подключения к базе данных и код-шифр приложения были удалены, измените их в файле ***appsettings.json***.
